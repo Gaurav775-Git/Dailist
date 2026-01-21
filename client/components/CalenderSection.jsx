@@ -3,7 +3,10 @@ import Monthgrid from './Monthgrid'
 
 const CalenderSection = () => {
   return (
+
     <div>
+         <h1 className='flex text-6xl'>MISSION-2026</h1>
+                <p className='mb-10 text-gray-400'>Over time, focused effort turns ordinary days into extraordinary progress.</p>
       <h2 className="text-sm tracking-widest mb-6">SEASON I</h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">

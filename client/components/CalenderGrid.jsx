@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const CalenderGrid = ({ day, value = 'empty' }) => {
   const colorMap = {
@@ -17,8 +17,7 @@ const CalenderGrid = ({ day, value = 'empty' }) => {
       text-[10px] sm:text-xs text-gray-300
       hover:scale-105 transition cursor-pointer"
       style={{ backgroundColor: colorMap[value] }}
-    >
-      {day}
+    >{day}
     </div>
   )
 }
