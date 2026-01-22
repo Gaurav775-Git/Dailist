@@ -1,5 +1,6 @@
 import React from 'react'
 import CalenderSection from '../../components/CalenderSection'
+import Navigator from '../../components/Navigator'
 
 const TaskLog = () => {
   return (
@@ -7,8 +8,9 @@ const TaskLog = () => {
        
         <div className='mt-12 flex justify-center'>
             <CalenderSection/>
+            <Navigator/>
         </div>
-
+      
     </div>
   )
 }
