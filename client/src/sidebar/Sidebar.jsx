@@ -6,9 +6,15 @@ import { PiChatsTeardropLight } from "react-icons/pi";
 import { CgProfile } from "react-icons/cg";
 import { GiGlowingArtifact } from "react-icons/gi";
 import { LuSwords } from "react-icons/lu";
-
+import { useState } from "react";
+import {useNavigate} from 'react-router-dom'
 const Sidebar = () => {
+
+
   const colortoken = "bg-[#000000]";
+  const [task,settask]=useState(false)
+  const navigate=useNavigate()
+
 
   const linkClass = ({ isActive }) =>
     `flex items-center justify-end w-full pr-29  py-3 text-xl transition 
@@ -51,11 +57,14 @@ const Sidebar = () => {
       </div>
 
      
-      <div className="py-4 pr-5 flex justify-end ">
+      <div 
+      className="py-4 pr-5 flex justify-end ">
         <button className="w-3/5 h-12 bg-[#D1D0D0] rounded-3xl text-black text-lg hover:bg-white transition">
           Today Task
         </button>
       </div>
+
+      
     </div>
   );
 };

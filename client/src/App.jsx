@@ -7,14 +7,16 @@ import Chats from './chats/Chats'
 import Profile from './profile/Profile'
 import Aitasks from './ai/Aitasks'
 import {Router,Route,Routes} from 'react-router-dom'
+import TaskLog from './pages/TaskLog'
 const App = () => {
   return (
     <div >
     <Routes>
       <Route path='/' element={<Login/>}/>
       <Route path='/social' element={<Social/>}/>
-     <Route path='/search' element={<Search/>}/>
-     <Route path='/chats' element={<Chats/>}/>
+      <Route path='/tasks' element={<TaskLog/>}/>
+      <Route path='/search' element={<Search/>}/>
+      <Route path='/chats' element={<Chats/>}/>
       <Route path='/profile' element={<Profile/>}/>
       <Route path='/aitask' element={<Aitasks/>}/>
     </Routes>
