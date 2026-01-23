@@ -1,13 +1,13 @@
 import React from 'react'
 import Sidebar from '../sidebar/Sidebar'
-const Social = () => {
+const Aitasks = () => {
   return (
-    <div className='flex max-h-screen '>
+   <div className='flex max-h-screen '>
       <div className=' max-h-screen'>
         <Sidebar/>
       </div>
-      Social</div>
+      ask ai task</div>
   )
 }
 
-export default Social
+export default Aitasks
