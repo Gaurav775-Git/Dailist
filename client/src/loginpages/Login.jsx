@@ -77,7 +77,9 @@ const Login = () => {
 
     const res = await axios.post(
       "http://localhost:3000/register",
-      data
+      data,{
+        withCredentials: true
+      }
     )
     
     if(res.status === 200){
