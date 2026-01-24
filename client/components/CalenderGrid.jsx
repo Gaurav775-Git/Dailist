@@ -11,13 +11,15 @@ const CalenderGrid = ({ day, value = 'empty' }) => {
   }
 
   return (
-    <div
-      className="w-7 h-7 sm:w-8 sm:h-8 lg:w-9 lg:h-9
+    <div>
+      <button className="w-7 h-7 sm:w-8 sm:h-8 lg:w-9 lg:h-9
       rounded-lg flex items-center justify-center
       text-[10px] sm:text-xs text-gray-300
       hover:scale-105 transition cursor-pointer"
       style={{ backgroundColor: colorMap[value] }}
-    >{day}
+      >
+        {day}
+      </button>
     </div>
   )
 }
