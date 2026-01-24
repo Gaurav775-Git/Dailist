@@ -2,8 +2,10 @@ import React from "react";
 import { useState } from "react";
 import axios from "axios"; 
 import {useNavigate} from 'react-router-dom'
+import Sign from "./Sign";
 const Login = () => {
   const navigate=useNavigate()
+  const [open,setopen]=useState(false)
   const [show, setshow] = useState(false);
   const [data, setdata] = useState({
     email: "",
@@ -141,7 +143,8 @@ const Login = () => {
           <div className="mt-10 space-y-4">
             <p className="text-[#988686]">Already have an account?</p>
 
-            <button className="w-70 py-2 rounded-full border border-[#5C4E4E] hover:bg-[#5C4E4E] transition">
+            <button onClick={()=>setopen(true)} 
+            className="w-70 py-2 rounded-full border border-[#5C4E4E] hover:bg-[#5C4E4E] transition">
               Sign in
             </button>
 
@@ -151,6 +154,7 @@ const Login = () => {
           </div>
         </div>
       </div>
+      {open && <Sign open={open} setopen={setopen} />}
 
       {show && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">

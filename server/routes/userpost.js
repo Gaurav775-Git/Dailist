@@ -10,11 +10,12 @@ router.post("/userpost",auth,async(req,res)=>{
     if(!text){
         return res.status(400).json({message:"text is required"})
       }
-     const post= await userpost.create({
+     const savedpost= await userpost.create({
         userpost_id:req.userId,
         text:text
       })
-       res.status(200).json({message:"post created",post})
+      const fullpost= await savedpost.populate("userpost_id")
+       res.status(200).json({message:"post created",fullpost})
       
 
     } catch (error) {
