@@ -15,6 +15,7 @@ const auth=(req,res,next)=>{
         
     } catch (error) {
         console.log(error,"you are not authorized");
+        return res.status(401).json({message:"invalid token"})
     }
 }
 
