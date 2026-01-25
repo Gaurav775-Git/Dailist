@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import PopUpWin from './PopUpWin'
 
 const CalenderGrid = ({ day, value = 'empty' }) => {
 
@@ -21,6 +22,7 @@ const CalenderGrid = ({ day, value = 'empty' }) => {
 
       >
         {day}
+        
       </button>
     </div>
   )

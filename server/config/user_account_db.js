@@ -1,8 +1,9 @@
 const mongoose=require('mongoose')
+require("dotenv").config();
 
  const connectdb=async ()=>{
    try {
-    await mongoose.connect("mongodb://localhost:27017/dailist");
+    await mongoose.connect(process.env.MONGO_URL);
     console.log("db connected");
     
    } catch (error) {
