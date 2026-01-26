@@ -1,43 +1,54 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Monthgrid from './Monthgrid'
+import axios from 'axios'
 
 const CalenderSection = () => {
+  const [completedDays, setCompletedDays] = useState([])
+  useEffect(() => {
+    const fetchCompleted = async () => {
+      try {
+        const res = await axios.get('http://localhost:5000/api/daily-log')
+        setCompletedDays(res.data) 
+      } catch (err) {
+        console.log('Error fetching completed days:', err)
+      }
+    }
+    fetchCompleted()
+  }, [])
+
   return (
-
     <div>
-         <h1 className='flex text-6xl'>MISSION-2026</h1>
-                <p className='mb-10 text-gray-400'>Over time, focused effort turns ordinary days into extraordinary progress.</p>
-      <h2 className="text-sm tracking-widest mb-6">SEASON I</h2>
+      <h1 className='flex text-6xl'>MISSION-2026</h1>
+      <p className='mb-10 text-gray-400'>
+        Over time, focused effort turns ordinary days into extraordinary progress.
+      </p>
 
+      <h2 className="text-sm tracking-widest mb-6">SEASON I</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-        <Monthgrid name="Jan 2026" year={2026} monthIndex={0} />
-        <Monthgrid name="Feb 2026" year={2026} monthIndex={1} />
-        <Monthgrid name="Mar 2026" year={2026} monthIndex={2} />
-        <Monthgrid name="Apr 2026" year={2026} monthIndex={3} />
+        <Monthgrid name="Jan 2026" year={2026} monthIndex={0} completedDays={completedDays} setCompletedDays={setCompletedDays} />
+        <Monthgrid name="Feb 2026" year={2026} monthIndex={1} completedDays={completedDays} setCompletedDays={setCompletedDays} />
+        <Monthgrid name="Mar 2026" year={2026} monthIndex={2} completedDays={completedDays} setCompletedDays={setCompletedDays} />
+        <Monthgrid name="Apr 2026" year={2026} monthIndex={3} completedDays={completedDays} setCompletedDays={setCompletedDays} />
       </div>
 
       <hr className="my-10 mx-auto border-0 h-px bg-gray-600" />
-
 
       <h2 className="text-sm tracking-widest mb-6">SEASON II</h2>
-
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-        <Monthgrid name="may 2026" year={2026} monthIndex={4} />
-        <Monthgrid name="jun 2026" year={2026} monthIndex={5} />
-        <Monthgrid name="jul 2026" year={2026} monthIndex={6} />
-        <Monthgrid name="aug 2026" year={2026} monthIndex={7} />
+        <Monthgrid name="May 2026" year={2026} monthIndex={4} completedDays={completedDays} setCompletedDays={setCompletedDays} />
+        <Monthgrid name="Jun 2026" year={2026} monthIndex={5} completedDays={completedDays} setCompletedDays={setCompletedDays} />
+        <Monthgrid name="Jul 2026" year={2026} monthIndex={6} completedDays={completedDays} setCompletedDays={setCompletedDays} />
+        <Monthgrid name="Aug 2026" year={2026} monthIndex={7} completedDays={completedDays} setCompletedDays={setCompletedDays} />
       </div>
 
       <hr className="my-10 mx-auto border-0 h-px bg-gray-600" />
 
-
       <h2 className="text-sm tracking-widest mb-6">SEASON III</h2>
-
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-        <Monthgrid name="sep 2026" year={2026} monthIndex={8} />
-        <Monthgrid name="oct 2026" year={2026} monthIndex={9} />
-        <Monthgrid name="nov 2026" year={2026} monthIndex={10} />
-        <Monthgrid name="dec 2026" year={2026} monthIndex={11} />
+        <Monthgrid name="Sep 2026" year={2026} monthIndex={8} completedDays={completedDays} setCompletedDays={setCompletedDays} />
+        <Monthgrid name="Oct 2026" year={2026} monthIndex={9} completedDays={completedDays} setCompletedDays={setCompletedDays} />
+        <Monthgrid name="Nov 2026" year={2026} monthIndex={10} completedDays={completedDays} setCompletedDays={setCompletedDays} />
+        <Monthgrid name="Dec 2026" year={2026} monthIndex={11} completedDays={completedDays} setCompletedDays={setCompletedDays} />
       </div>
     </div>
   )
