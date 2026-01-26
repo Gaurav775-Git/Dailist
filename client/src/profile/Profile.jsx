@@ -5,10 +5,13 @@ import axios from "axios";
 import { Commet } from "react-loading-indicators";
 import { MdOutlineFileUpload } from "react-icons/md";
 import Navigator from "../../components/Navigator";
+import Editbio from "./Editbio";
 const Profile = () => {
   const colortoken = "bg-[#000000]";
   const [userprofile, setuserProfile] = useState(null);
   const [image, setimage] = useState(null);
+  const [quote, setquote] = useState("");
+  const [editbio, seteditbio] = useState(false);
 
   useEffect(() => {
     axios
@@ -61,6 +64,27 @@ const Profile = () => {
     }
   };
 
+  const submitquote = async () => {
+    try {
+      if (!quote && quote.length > 10) {
+        alert("Quote is required or more than 10 characters");
+        return;
+      }
+      const res = await axios.post(
+        "http://localhost:3000/updatequote",
+        { quote },
+        { withCredentials: true },
+      );
+
+      setuserProfile((prev) => ({
+        ...prev,
+        bio: res.data.bio,
+      }));
+    } catch (err) {
+      console.log("error", err);
+    }
+  };
+
   return (
     <div className="ml-94 flex h-screen">
       <Sidebar />
@@ -92,7 +116,6 @@ const Profile = () => {
                 </span>
               )}
 
-
               <input
                 type="file"
                 accept="image/*"
@@ -110,20 +133,45 @@ const Profile = () => {
           </div>
 
           <div className="flex justify-center p-4 text-white">
-            <div className="flex items-center gap-3 w-full max-w-2xl bg-[#1f1f1f] p-3 rounded-xl">
-              <input
-                type="text"
-                placeholder="Write something that inspires others..."
-                className="flex-1 bg-transparent text-white outline-none border-b border-gray-600 focus:border-white transition px-2 py-1"
-              />
+            {userprofile.bio ? (
+              <div className="relative w-full max-w-2xl bg-transparent border border-gray-700 rounded-xl p-5 group hover:border-blue-500 transition">
+                <p className="text-gray-300 leading-relaxed min-h-[60px]">
+                  {userprofile.bio}
+                </p>
 
-              <button type="button">
-                <label className="cursor-pointer hover:bg-gray-700 p-2 rounded-full transition">
-                  <MdOutlineFileUpload className="w-6 h-6 text-white" />
-                </label>
-              </button>
-            </div>
+                <button
+                  onClick={() => seteditbio(true)}
+                  className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition bg-gray-800 hover:bg-blue-600 p-2 rounded-full"
+                  title="Edit Bio"
+                >
+                  ✏️
+                </button>
+
+                {editbio && (
+                  <Editbio
+                    currentBio={userprofile.bio}
+                    close={() => seteditbio(false)}
+                    info={setuserProfile}
+                  />
+                )}
+              </div>
+            ) : (
+              <div className="flex items-center gap-3 w-full max-w-2xl bg-transparent border-b border-gray-600 p-3">
+                <input
+                  type="text"
+                  value={quote}
+                  placeholder="Write something that inspires others..."
+                  onChange={(e) => setquote(e.target.value)}
+                  className="w-full bg-transparent text-white outline-none"
+                />
+
+                <button onClick={submitquote}>
+                  <MdOutlineFileUpload className="w-6 h-6" />
+                </button>
+              </div>
+            )}
           </div>
+
           <div></div>
         </main>
       </div>

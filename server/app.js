@@ -15,6 +15,7 @@ var user_post=require('./routes/userpost')
 var getuser_post=require('./routes/getuserpost')
 var user_login=require('./routes/login')
 var user_image=require('./routes/imagepost')
+var user_posts=require('./routes/quotepost')
 
 var app = express();
  connectdb()
@@ -44,6 +45,7 @@ app.use("/",user_post)
 app.use("/",getuser_post)
 app.use("/",user_login)
 app.use("/",user_image)
+app.use("/",user_posts)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
