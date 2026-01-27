@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
 
-const CalenderGrid = ({ day, value = 'empty', date }) => {
-  
-  const [color, setColor] = useState(false)
+const CalenderGrid = ({ day, date, completedDays = [], setCompletedDays }) => {
   const [pop, setPop] = useState(false)
 
+  const [selectedColor, setSelectedColor] = useState('bg-green-500')
 
   const [formData, setFormData] = useState({
     day: '',
@@ -14,19 +13,7 @@ const CalenderGrid = ({ day, value = 'empty', date }) => {
     tomorrow: ''
   })
 
-  
-  useEffect(() => {
-    const checkCompleted = async () => {
-      try {
-        const res = await axios.get('http://localhost:5000/api/daily-log')
-        if (res.data.includes(date)) setColor(true)
-      } catch (err) {
-        console.log('Error fetching completed days:', err)
-      }
-    }
-
-    checkCompleted()
-  }, [date])
+  const isCompleted = completedDays.includes(date)
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -34,20 +21,37 @@ const CalenderGrid = ({ day, value = 'empty', date }) => {
 
   const popUp = () => setPop(true)
   const closePop = () => setPop(false)
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      await axios.post('http://localhost:5000/api/daily-log', {
-        date,
-        day: formData.day,
-        learned: formData.learned,
-        technical: formData.technical,
-        tomorrow: formData.tomorrow
-      })
-      setColor(true) 
+      const token = localStorage.getItem('token')
+
+      await axios.post(
+        'http://localhost:3000/api/daily-log',
+        {
+          date,
+          day: formData.day,
+          learned: formData.learned,
+          technical: formData.technical,
+          tomorrow: formData.tomorrow,
+          color: selectedColor // 👈 send color
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      )
+
+      // ✅ update parent so UI turns green
+      if (!completedDays.includes(date)) {
+        setCompletedDays(prev => [...prev, date])
+      }
+
       closePop()
     } catch (err) {
-      console.log(err)
+      console.log('Save error:', err)
       alert('Error saving data')
     }
   }
@@ -60,7 +64,7 @@ const CalenderGrid = ({ day, value = 'empty', date }) => {
           rounded-lg flex items-center justify-center
           text-[10px] sm:text-xs
           hover:scale-105 transition cursor-pointer
-          ${color ? 'bg-green-500 text-white' : 'bg-gray-800 text-gray-300'}
+          ${isCompleted ? selectedColor + ' text-white' : 'bg-gray-800 text-gray-300'}
         `}
         onClick={popUp}
       >
@@ -78,6 +82,32 @@ const CalenderGrid = ({ day, value = 'empty', date }) => {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-5">
+
+              {/* ✅ NEW: Color Picker */}
+              <div>
+                <label className="text-xs text-gray-300 block mb-2">
+                  Choose calendar color
+                </label>
+                <div className="flex gap-3">
+                  {[
+                    'bg-green-500',
+                    'bg-blue-500',
+                    'bg-purple-500',
+                    'bg-yellow-500',
+                    'bg-red-500'
+                  ].map(color => (
+                    <button
+                      type="button"
+                      key={color}
+                      onClick={() => setSelectedColor(color)}
+                      className={`w-6 h-6 rounded-full ${color} ring-2 ${
+                        selectedColor === color ? 'ring-white' : 'ring-transparent'
+                      }`}
+                    />
+                  ))}
+                </div>
+              </div>
+
               <div>
                 <label className="text-xs text-gray-300 block mb-1">
                   How was your day?
