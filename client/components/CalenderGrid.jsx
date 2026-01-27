@@ -3,9 +3,7 @@ import axios from 'axios'
 
 const CalenderGrid = ({ day, date, completedDays = [], setCompletedDays }) => {
   const [pop, setPop] = useState(false)
-
   const [selectedColor, setSelectedColor] = useState('bg-green-500')
-
   const [formData, setFormData] = useState({
     day: '',
     learned: '',
@@ -14,12 +12,45 @@ const CalenderGrid = ({ day, date, completedDays = [], setCompletedDays }) => {
   })
 
   const isCompleted = completedDays.includes(date)
+  const today = new Date()
+  const cellDate = new Date(date)
+  today.setHours(0, 0, 0, 0)
+  cellDate.setHours(0, 0, 0, 0)
+  const isPast = cellDate < today
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
-  const popUp = () => setPop(true)
+  // ✅ Fetch saved data when popup opens
+  const popUp = async () => {
+    if (isPast && !isCompleted) return
+
+    const token = localStorage.getItem('token')
+    try {
+      const res = await axios.get(`http://localhost:3000/api/daily-log/${date}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+
+      if (res.data) {
+        setFormData({
+          day: res.data.day || '',
+          learned: res.data.learned || '',
+          technical: res.data.technical || '',
+          tomorrow: res.data.tomorrow || ''
+        })
+        setSelectedColor(res.data.color || 'bg-green-500')
+      } else {
+        setFormData({ day: '', learned: '', technical: '', tomorrow: '' })
+        setSelectedColor('bg-green-500')
+      }
+    } catch (err) {
+      console.log('Fetch error:', err)
+    }
+
+    setPop(true)
+  }
+
   const closePop = () => setPop(false)
 
   const handleSubmit = async (e) => {
@@ -35,7 +66,7 @@ const CalenderGrid = ({ day, date, completedDays = [], setCompletedDays }) => {
           learned: formData.learned,
           technical: formData.technical,
           tomorrow: formData.tomorrow,
-          color: selectedColor // 👈 send color
+          color: selectedColor
         },
         {
           headers: {
@@ -44,7 +75,6 @@ const CalenderGrid = ({ day, date, completedDays = [], setCompletedDays }) => {
         }
       )
 
-      // ✅ update parent so UI turns green
       if (!completedDays.includes(date)) {
         setCompletedDays(prev => [...prev, date])
       }
@@ -56,6 +86,11 @@ const CalenderGrid = ({ day, date, completedDays = [], setCompletedDays }) => {
     }
   }
 
+  // Button color logic
+  let buttonClasses = 'bg-gray-800 text-gray-300'
+  if (isCompleted) buttonClasses = selectedColor + ' text-white'
+  else if (isPast) buttonClasses = 'bg-gray-600 text-gray-400 cursor-not-allowed opacity-60'
+
   return (
     <div className="relative">
       <button
@@ -63,10 +98,11 @@ const CalenderGrid = ({ day, date, completedDays = [], setCompletedDays }) => {
           w-7 h-7 sm:w-8 sm:h-8 lg:w-9 lg:h-9
           rounded-lg flex items-center justify-center
           text-[10px] sm:text-xs
-          hover:scale-105 transition cursor-pointer
-          ${isCompleted ? selectedColor + ' text-white' : 'bg-gray-800 text-gray-300'}
+          hover:scale-105 transition
+          ${buttonClasses}
         `}
         onClick={popUp}
+        disabled={isPast && !isCompleted}
       >
         {day}
       </button>
@@ -76,26 +112,17 @@ const CalenderGrid = ({ day, date, completedDays = [], setCompletedDays }) => {
           <div className="w-full max-w-lg rounded-2xl p-6 bg-gray-600">
             <div className="mb-5 text-center">
               <h2 className="text-xl font-semibold text-white">Daily Check-in</h2>
-              <p className="text-sm text-gray-300">
-                Focus on what really matters today.
-              </p>
+              <p className="text-sm text-gray-300">Focus on what really matters today.</p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-5">
-
-              {/* ✅ NEW: Color Picker */}
+              {/* Color Picker */}
               <div>
                 <label className="text-xs text-gray-300 block mb-2">
                   Choose calendar color
                 </label>
                 <div className="flex gap-3">
-                  {[
-                    'bg-green-500',
-                    'bg-blue-500',
-                    'bg-purple-500',
-                    'bg-yellow-500',
-                    'bg-red-500'
-                  ].map(color => (
+                  {['bg-green-500', 'bg-blue-500', 'bg-purple-500', 'bg-yellow-500', 'bg-red-500'].map(color => (
                     <button
                       type="button"
                       key={color}
@@ -108,10 +135,9 @@ const CalenderGrid = ({ day, date, completedDays = [], setCompletedDays }) => {
                 </div>
               </div>
 
+              {/* Form Fields */}
               <div>
-                <label className="text-xs text-gray-300 block mb-1">
-                  How was your day?
-                </label>
+                <label className="text-xs text-gray-300 block mb-1">How was your day?</label>
                 <textarea
                   className="w-full p-3 rounded-xl bg-gray-700 text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-green-500"
                   name="day"
@@ -123,9 +149,7 @@ const CalenderGrid = ({ day, date, completedDays = [], setCompletedDays }) => {
               </div>
 
               <div>
-                <label className="text-xs text-gray-300 block mb-1">
-                  What did you learn today?
-                </label>
+                <label className="text-xs text-gray-300 block mb-1">What did you learn today?</label>
                 <textarea
                   className="w-full p-3 rounded-xl bg-gray-700 text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-blue-500"
                   name="learned"
@@ -137,9 +161,7 @@ const CalenderGrid = ({ day, date, completedDays = [], setCompletedDays }) => {
               </div>
 
               <div>
-                <label className="text-xs text-gray-300 block mb-1">
-                  Technical progress
-                </label>
+                <label className="text-xs text-gray-300 block mb-1">Technical progress</label>
                 <textarea
                   className="w-full p-3 rounded-xl bg-gray-700 text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-emerald-500"
                   name="technical"
@@ -151,9 +173,7 @@ const CalenderGrid = ({ day, date, completedDays = [], setCompletedDays }) => {
               </div>
 
               <div>
-                <label className="text-xs text-gray-300 block mb-1">
-                  Main focus for tomorrow
-                </label>
+                <label className="text-xs text-gray-300 block mb-1">Main focus for tomorrow</label>
                 <textarea
                   className="w-full p-3 rounded-xl bg-gray-700 text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-yellow-500"
                   name="tomorrow"
