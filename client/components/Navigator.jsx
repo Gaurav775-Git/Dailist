@@ -38,6 +38,7 @@ const Navigator = () => {
         </button>
 
         <button
+          onClick={()=>navigate('/profile')}
           className="relative before:hidden hover:before:flex before:justify-center before:items-center before:h-4 before:text-[.6rem] before:px-1 before:content-['PROFILE'] before:bg-black dark:before:bg-white dark:before:text-black before:text-white before:bg-opacity-50 before:absolute before:-top-7 before:rounded-lg hover:-translate-y-5 cursor-pointer hover:scale-125 bg-white rounded-full p-2 px-3"
           type="button"
         >

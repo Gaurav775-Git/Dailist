@@ -7,7 +7,7 @@ const CalenderSection = () => {
   useEffect(() => {
     const fetchCompleted = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/daily-log')
+        const res = await axios.get('http://localhost:3000/api/daily-log')
         setCompletedDays(res.data) 
       } catch (err) {
         console.log('Error fetching completed days:', err)
