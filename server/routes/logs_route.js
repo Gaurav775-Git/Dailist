@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const DailyLog = require('../models/DailyLog');
+const auth = require('../middleware/auth');
 
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
   try {
-    const logs = await DailyLog.find();
+    const logs = await DailyLog.find({ userId: req.userId });
     const dates = logs.map(log => log.date);
     res.json(dates);
   } catch (err) {
@@ -13,7 +14,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
   try {
     const { date, day, learned, technical, tomorrow } = req.body;
 
@@ -22,15 +23,15 @@ router.post('/', async (req, res) => {
     }
 
     const log = await DailyLog.findOneAndUpdate(
-      { date },
-      { date, day, learned, technical, tomorrow },
+      { date, userId: req.userId },
+      { date, day, learned, technical, tomorrow, userId: req.userId },
       { upsert: true, new: true }
     );
 
     res.status(201).json(log);
   } catch (err) {
     console.log('POST daily-log error:', err);
-    res.status(500).json({ message: 'Error saving data' });
+    res.status(500).json({ message: err.message || 'Error saving data' });
   }
 });
 
