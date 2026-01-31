@@ -1,0 +1,36 @@
+const { Server } = require("socket.io");
+
+const configureSocket = (server) => {
+  const io = new Server(server, {
+    cors: {
+      origin: "http://localhost:5173",
+      methods: ["GET", "POST"],
+    },
+  });
+
+  io.on("connection", (socket) => {
+    console.log("User connected:", socket.id);
+
+    socket.on("join_chat", (chatId) => {
+      socket.join(chatId);
+      console.log(`User ${socket.id} joined chat ${chatId}`);
+    });
+
+    socket.on("send_message", (data) => {
+      const { chatId, message } = data;
+      io.to(chatId).emit("receive_message", message);
+    });
+
+    socket.on("new_post", (newPost) => {
+      io.emit("post_added", newPost);
+    });
+
+    socket.on("disconnect", () => {
+      console.log("User disconnected:", socket.id);
+    });
+  });
+
+  return io; // Export io instance
+};
+
+module.exports = configureSocket;
