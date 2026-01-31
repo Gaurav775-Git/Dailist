@@ -5,8 +5,7 @@ const  auth  = require('../middleware/auth')
 
 router.get("/profile",auth,async(req,res)=>{
     try {
-        const  userid=req.userId;
-        const profile=await userprofile.findOne({user_id:userid})
+        const profile=await userprofile.findOne({user_id:req.user.id})
         if(!profile){
             return res.status(400).json({message:"profile not found"})
         }
