@@ -1,8 +1,11 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 
+import { Function } from '../src/profile/Function'
 const Navigator = () => {
   const navigate = useNavigate()
+  const change=Function(state => state.clicked)
 
   return (
     <div className='fixed top-[90vh]'>
@@ -19,6 +22,7 @@ const Navigator = () => {
         </button>
 
         <button
+          onClick={change}
           className="relative before:hidden hover:before:flex before:justify-center before:items-center before:h-4 before:text-[.6rem] before:px-1 before:content-['SPARK'] before:bg-black dark:before:bg-white dark:before:text-black before:text-white before:bg-opacity-50 before:absolute before:-top-7 before:rounded-lg hover:-translate-y-5 cursor-pointer hover:scale-125 bg-white rounded-full p-2 px-3"
           type="button"
         >

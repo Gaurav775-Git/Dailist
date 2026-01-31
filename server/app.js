@@ -17,6 +17,8 @@ var user_login=require('./routes/login')
 var user_image=require('./routes/imagepost')
 var dailyLogRoutes = require("./routes/logs_route");
 var user_posts=require('./routes/quotepost')
+var user_daily_task=require("./routes/dailytask")
+var gettask = require("./routes/getdailytask")
 
 var app = express();
 
@@ -51,6 +53,8 @@ app.use("/",user_login)
 app.use("/",user_image)
 app.use("/",user_posts)
 app.use("/api/daily-log",dailyLogRoutes)
+app.use("/",user_daily_task)
+app.use("/",gettask)
 
 // catch 404
 app.use(function(req, res, next) {
