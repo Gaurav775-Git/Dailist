@@ -6,12 +6,20 @@ import { Commet } from "react-loading-indicators";
 import { MdOutlineFileUpload } from "react-icons/md";
 import Navigator from "../../components/Navigator";
 import Editbio from "./Editbio";
+import Heatmap from "./heatmapsec/Heatmap";
+import Tasksec from "./tasksection/Tasksec";
+import Addtask from "../../components/Addtask";
+
+import { Function } from "./Function";
 const Profile = () => {
   const colortoken = "bg-[#000000]";
   const [userprofile, setuserProfile] = useState(null);
   const [image, setimage] = useState(null);
   const [quote, setquote] = useState("");
   const [editbio, seteditbio] = useState(false);
+
+  const clicked = Function((state) => state.clicked);
+  const open = Function((state) => state.open);
 
   useEffect(() => {
     axios
@@ -86,11 +94,11 @@ const Profile = () => {
   };
 
   return (
-    <div className="ml-94 flex h-screen">
+    <div className="flex w-screen h-screen overflow-hidden">
       <Sidebar />
 
       <div
-        className={`flex-1 ${colortoken} flex flex-col border-r border-gray-700`}
+        className={`flex-1 ${colortoken} flex flex-col border-r  ml-72 overflow-hidden border-gray-700 bg-black`}
       >
         <header className="flex items-center p-2 border-b border-gray-700 text-white">
           <FaArrowLeft className="cursor-pointer mx-4 w-5 h-5" />
@@ -101,7 +109,7 @@ const Profile = () => {
           </div>
         </header>
 
-        <main className="h-screen w-full">
+        <main className="flex-1 overflow-y-auto  overflow-x-hidden">
           <div className="h-40 w-full border-b border-gray-700 bg-[#1f1f1f] flex justify-center items-center">
             <label className="relative w-[140px] h-[140px] rounded-full bg-gray-600 flex items-center justify-center cursor-pointer">
               {userprofile.image ? (
@@ -170,12 +178,32 @@ const Profile = () => {
                 </button>
               </div>
             )}
+
+            {open && (
+              <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+                <div className="relative">
+                  <Addtask onClose={clicked} />
+                </div>
+              </div>
+            )}
           </div>
 
-          <div></div>
+          <div className="w-full flex item-center justify-center">
+            <Heatmap />
+          </div>
+          <div className="flex w-full">
+            <div className="w-3/5 flex justify-center">
+              <h1 className="text-white text-2xl font-bold">All Tasks</h1>
+            </div>
+
+            <div className="w-2/5 flex justify-center">
+              <Tasksec />
+            </div>
+          </div>
         </main>
+        <Navigator />
       </div>
-      <Navigator />
+      
     </div>
   );
 };

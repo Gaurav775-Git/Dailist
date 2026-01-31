@@ -59,16 +59,16 @@ const Social = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen w-full bg-black text-white">
       {/* Sidebar */}
       <div>
         <Sidebar />
       </div>
 
       {/* Main Content */}
-      <div className="ml-94 flex flex-col items-center">
+      <div className="ml-94 flex flex-col ">
         {/* Header */}
-        <header className="w-full max-w-3xl sticky top-0 z-50 bg-black border-b border-gray-800 flex items-center px-4 py-3">
+        <header className="w-full max-w-4xl sticky top-0 z-50 bg-black border-b border-gray-800 flex items-center px-4 py-3">
           <div
             onClick={() => navigate("/profile")}
             className="w-12 h-12 cursor-pointer rounded-full border border-gray-600 bg-[#1f1f1f] flex items-center justify-center text-white text-xl mr-3 font-semibold shadow"
@@ -81,7 +81,7 @@ const Social = () => {
               type="text"
               value={text}
               onChange={(e) => settext(e.target.value)}
-              placeholder="What’s on your mind?"
+              placeholder="What's on your mind?"
               className="flex-1 bg-transparent outline-none text-white placeholder-gray-400 text-sm"
             />
 
@@ -95,7 +95,7 @@ const Social = () => {
         </header>
 
         {/* Feed */}
-        <main className="w-full max-w-3xl p-4 space-y-4">
+        <main className="w-full max-w-4xl p-4 space-y-4">
           {post.map((post) => (
             <div
               key={post._id}

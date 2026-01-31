@@ -19,6 +19,8 @@ var dailyLogRoutes = require("./routes/logs_route");
 var user_posts=require('./routes/quotepost')
 var chatRoutes = require('./routes/chat.route');
 var messageRoutes = require('./routes/message.route');
+var user_daily_task=require("./routes/dailytask")
+var gettask = require("./routes/getdailytask")
 
 var app = express();
 var http = require('http');
@@ -60,6 +62,8 @@ app.use("/",user_posts(io))
 app.use("/api/daily-log",dailyLogRoutes)
 app.use('/chat', chatRoutes);
 app.use('/message', messageRoutes);
+app.use("/",user_daily_task)
+app.use("/",gettask)
 
 // catch 404
 app.use(function(req, res, next) {

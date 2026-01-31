@@ -21,7 +21,7 @@ const Sidebar = () => {
      ${isActive ? "bg-[#1f1f1f] text-white" : "text-[#D1D0D0] hover:bg-[#1a1a1a]"}`;
 
   return (
-    <div className={`h-screen w-94 ${colortoken} flex flex-col fixed left-0 top-0`}>
+    <div className={` w-72 ${colortoken} h-screen flex flex-col fixed left-0 top-0`}>
 
       
       <div className="h-16 flex items-center justify-center text-xl text-white border-b border-gray-700">
