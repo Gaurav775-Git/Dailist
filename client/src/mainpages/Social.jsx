@@ -32,7 +32,6 @@ const Social = () => {
       })
       .catch((err) => {
         console.log(err);
-        alert("unable to post");
       });
   }, []);
 
@@ -49,11 +48,13 @@ const Social = () => {
         { withCredentials: true }
       )
       .then((res) => {
-        setpost((prev) => [res.data.post, ...prev]);
+        setpost((prev) => [res.data.fullpost, ...prev]);
         settext("");
+        alert("Post created successfully!");
       })
       .catch((err) => {
         console.log(err.response?.data || err);
+        alert(err.response?.data?.message || "Failed to create post.");
       });
   };
 
