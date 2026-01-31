@@ -81,7 +81,7 @@ const Social = () => {
               type="text"
               value={text}
               onChange={(e) => settext(e.target.value)}
-              placeholder="What’s on your mind?"
+              placeholder="What's on your mind?"
               className="flex-1 bg-transparent outline-none text-white placeholder-gray-400 text-sm"
             />
 
