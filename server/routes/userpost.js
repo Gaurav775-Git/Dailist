@@ -19,8 +19,8 @@ router.post("/userpost",auth,async(req,res)=>{
       
 
     } catch (error) {
-        console.log(error,"user not get")
-        res.status(500).json({message:"user not get go and create account"})
+        console.log(error,"post creation failed")
+        res.status(500).json({message:"Unable to create post"})
     }
     
 })

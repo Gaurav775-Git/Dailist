@@ -8,6 +8,7 @@ import Profile from './profile/Profile'
 import Aitasks from './ai/Aitasks'
 import {Router,Route,Routes} from 'react-router-dom'
 import TaskLog from './pages/TaskLog'
+import './app.css'
 const App = () => {
   return (
     <div >

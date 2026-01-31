@@ -26,10 +26,9 @@ const CalenderGrid = ({ day, date, completedDays = [], setCompletedDays }) => {
   const popUp = async () => {
     if (isPast && !isCompleted) return
 
-    const token = localStorage.getItem('token')
     try {
       const res = await axios.get(`http://localhost:3000/api/daily-log/${date}`, {
-        headers: { Authorization: `Bearer ${token}` }
+        withCredentials: true
       })
 
       if (res.data) {
@@ -56,8 +55,6 @@ const CalenderGrid = ({ day, date, completedDays = [], setCompletedDays }) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const token = localStorage.getItem('token')
-
       await axios.post(
         'http://localhost:3000/api/daily-log',
         {
@@ -69,9 +66,7 @@ const CalenderGrid = ({ day, date, completedDays = [], setCompletedDays }) => {
           color: selectedColor
         },
         {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+          withCredentials: true
         }
       )
 
@@ -82,7 +77,7 @@ const CalenderGrid = ({ day, date, completedDays = [], setCompletedDays }) => {
       closePop()
     } catch (err) {
       console.log('Save error:', err)
-      alert('Error saving data')
+      alert(err.response?.data?.message || 'Error saving data')
     }
   }
 

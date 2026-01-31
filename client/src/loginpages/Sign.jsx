@@ -42,12 +42,14 @@ const Sign = ({open,setopen}) => {
         })
         console.log(email,password);
          
-        if (res.status === 200){
-            navigate("/social")
+        if (res.status === 200) {
+            alert("Login successful!");
+            navigate("/social");
         }
 
         } catch (error) {
             console.log(error.response?.data || error);
+            alert(error.response?.data?.message || "Something went wrong during login.");
         }
     }
 
