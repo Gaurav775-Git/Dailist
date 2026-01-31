@@ -84,21 +84,21 @@ const Login = () => {
       }
     )
     
-    if(res.status === 200){
-      navigate("/social")
+    if (res.status === 200) {
+      alert("Registration successful!");
+      navigate("/social");
     }
-  
+
     setdata({
       email: "",
       name: "",
       date: "",
       password: "",
       phone: "",
-    })
-
+    });
   } catch (error) {
-    console.log(error.response?.data || error.message)
-    alert("Something went wrong")
+    console.log(error.response?.data || error.message);
+    alert(error.response?.data?.message || "Something went wrong during registration.");
   }
 }
 
