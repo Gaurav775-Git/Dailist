@@ -7,7 +7,7 @@ const DailyLogSchema = new mongoose.Schema({
   },
   userId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'users_account',
     required: true
   },
   day: String,

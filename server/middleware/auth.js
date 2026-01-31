@@ -9,7 +9,8 @@ const auth=(req,res,next)=>{
         if(!decode){
             return res.status(401).json({message:"Unauthorized"})
         }
-        req.userId=decode._id;
+        console.log('Decoded user ID from JWT:', decode._id); // Add this line
+        req.user = { id: decode._id };
         next();
         
         

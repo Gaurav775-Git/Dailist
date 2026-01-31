@@ -5,7 +5,9 @@ const auth = require('../middleware/auth');
 
 router.get('/', auth, async (req, res) => {
   try {
-    const logs = await DailyLog.find({ userId: req.userId });
+    console.log('Fetching daily logs for userId:', req.user.id); // Add this line
+    const logs = await DailyLog.find({ userId: req.user.id });
+    console.log('Retrieved logs:', logs); // Add this line
     const dates = logs.map(log => log.date);
     res.json(dates);
   } catch (err) {
@@ -23,8 +25,8 @@ router.post('/', auth, async (req, res) => {
     }
 
     const log = await DailyLog.findOneAndUpdate(
-      { date, userId: req.userId },
-      { date, day, learned, technical, tomorrow, userId: req.userId },
+      { date, userId: req.user.id },
+      { date, day, learned, technical, tomorrow, userId: req.user.id },
       { upsert: true, new: true }
     );
 
