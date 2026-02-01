@@ -17,11 +17,18 @@ var user_login=require('./routes/login')
 var user_image=require('./routes/imagepost')
 var dailyLogRoutes = require("./routes/logs_route");
 var user_posts=require('./routes/quotepost')
+var chatRoutes = require('./routes/chat.route');
+var messageRoutes = require('./routes/message.route');
 var user_daily_task=require("./routes/dailytask")
 var gettask = require("./routes/getdailytask")
 var complete_task=require("./routes/taskcomplete")
 
 var app = express();
+var http = require('http');
+var server = http.createServer(app);
+var configureSocket = require('./socket.io');
+var io = configureSocket(server);
+
 
 dotenv.config();
 connectdb();
@@ -48,12 +55,14 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use("/",user_register)
 app.use("/",user_profile)
-app.use("/",user_post)
+app.use("/",user_post(io))
 app.use("/",getuser_post)
 app.use("/",user_login)
-app.use("/",user_image)
-app.use("/",user_posts)
+app.use("/",user_image(io))
+app.use("/",user_posts(io))
 app.use("/api/daily-log",dailyLogRoutes)
+app.use('/chat', chatRoutes);
+app.use('/message', messageRoutes);
 app.use("/",user_daily_task)
 app.use("/",gettask)
 app.use("/",complete_task)
@@ -71,4 +80,4 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+module.exports = {app, server};

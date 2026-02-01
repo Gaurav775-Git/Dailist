@@ -9,7 +9,7 @@ const auth=(req,res,next)=>{
         if(!decode){
             return res.status(401).json({message:"Unauthorized"})
         }
-        req.userId=decode._id;
+        req.user = { id: decode._id };
         next();
         
         
