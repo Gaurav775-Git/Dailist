@@ -19,6 +19,7 @@ var dailyLogRoutes = require("./routes/logs_route");
 var user_posts=require('./routes/quotepost')
 var user_daily_task=require("./routes/dailytask")
 var gettask = require("./routes/getdailytask")
+var complete_task=require("./routes/taskcomplete")
 
 var app = express();
 
@@ -55,6 +56,7 @@ app.use("/",user_posts)
 app.use("/api/daily-log",dailyLogRoutes)
 app.use("/",user_daily_task)
 app.use("/",gettask)
+app.use("/",complete_task)
 
 // catch 404
 app.use(function(req, res, next) {
