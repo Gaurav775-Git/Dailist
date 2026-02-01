@@ -2,19 +2,20 @@ import React, { useState } from "react";
 import axios from "axios"
 const Taskdisplay = ({ data, date }) => {
   const [open, setOpen] = useState(false);
-  const [complete,setcomplete]=useState(false)
+  const [score,setscore]=useState(null)
   const difficultyColor = {
     easy: "bg-green-500/20 text-green-400",
     medium: "bg-yellow-500/20 text-yellow-400",
     hard: "bg-red-500/20 text-red-400",
   };
    
-  const completetask=()=>{
-    const change= setcomplete(!complete)
-    axios.post("http://localhost:3000/complete_task",change,{
-      withCredentials:true
+  const completetask=async (taskid,taskpoint)=>{
+    const res=await axios.post("http://localhost:3000/complete_task",
+      {taskid,taskpoint},
+      {withCredentials:true})
+    console.log(res.data.newscore)
+    setscore(res.data.newscore)
 
-    })
   }
 
   return (
@@ -28,6 +29,10 @@ const Taskdisplay = ({ data, date }) => {
         <h2 className="text-md font-semibold mr-9 tracking-wide text-gray-200">
            {new Date(date).toDateString()}
         </h2>
+        <span className="text-gray-400 text-sm">
+          today point:{score}
+        </span>
+
         <span className="text-gray-400 text-sm">
           {open ? "Hide Tasks ▲" : "Show Tasks ▼"}
         </span>
@@ -60,9 +65,9 @@ const Taskdisplay = ({ data, date }) => {
                     ⭐ {task.points}
                   </span>
 
-                  <div className="text-sm hover:bg-white" onClick={completetask}>
+                  <button className="text-sm hover:bg-white" onClick={()=>completetask(task._id,task.points)}>
                     {task.completed ? "✅" : "⏳"}
-                  </div>
+                  </button>
                 </div>
               </div>
             ))
