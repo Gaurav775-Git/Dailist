@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
 const CalenderGrid = ({ day, date, completedDays = [], setCompletedDays }) => {
@@ -18,35 +18,36 @@ const CalenderGrid = ({ day, date, completedDays = [], setCompletedDays }) => {
   cellDate.setHours(0, 0, 0, 0)
   const isPast = cellDate < today
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(`http://localhost:3000/api/daily-log/${date}`, {
+          withCredentials: true
+        })
+
+        if (res.data && (res.data.day || res.data.learned || res.data.technical || res.data.tomorrow)) {
+          setFormData({
+            day: res.data.day || '',
+            learned: res.data.learned || '',
+            technical: res.data.technical || '',
+            tomorrow: res.data.tomorrow || ''
+          })
+          setSelectedColor(res.data.color || 'bg-green-500')
+        }
+      } catch (err) {
+        // 404 means no log saved for this date yet, that's fine
+      }
+    }
+
+    fetchData()
+  }, [date])
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
-  // ✅ Fetch saved data when popup opens
-  const popUp = async () => {
+  const popUp = () => {
     if (isPast && !isCompleted) return
-
-    try {
-      const res = await axios.get(`http://localhost:3000/api/daily-log/${date}`, {
-        withCredentials: true
-      })
-
-      if (res.data) {
-        setFormData({
-          day: res.data.day || '',
-          learned: res.data.learned || '',
-          technical: res.data.technical || '',
-          tomorrow: res.data.tomorrow || ''
-        })
-        setSelectedColor(res.data.color || 'bg-green-500')
-      } else {
-        setFormData({ day: '', learned: '', technical: '', tomorrow: '' })
-        setSelectedColor('bg-green-500')
-      }
-    } catch (err) {
-      console.log('Fetch error:', err)
-    }
-
     setPop(true)
   }
 
@@ -81,10 +82,11 @@ const CalenderGrid = ({ day, date, completedDays = [], setCompletedDays }) => {
     }
   }
 
-  // Button color logic
   let buttonClasses = 'bg-gray-800 text-gray-300'
   if (isCompleted) buttonClasses = selectedColor + ' text-white'
   else if (isPast) buttonClasses = 'bg-gray-600 text-gray-400 cursor-not-allowed opacity-60'
+
+
 
   return (
     <div className="relative">
@@ -111,7 +113,6 @@ const CalenderGrid = ({ day, date, completedDays = [], setCompletedDays }) => {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-5">
-              {/* Color Picker */}
               <div>
                 <label className="text-xs text-gray-300 block mb-2">
                   Choose calendar color
@@ -130,7 +131,6 @@ const CalenderGrid = ({ day, date, completedDays = [], setCompletedDays }) => {
                 </div>
               </div>
 
-              {/* Form Fields */}
               <div>
                 <label className="text-xs text-gray-300 block mb-1">How was your day?</label>
                 <textarea
