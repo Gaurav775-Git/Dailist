@@ -5,7 +5,7 @@ const auth = require("../middleware/auth");
 
 router.get("/get_task", auth, async (req, res) => {
   try {
-    const user_id = req.userId;
+    const user_id = req.user.id;
 
     let today = new Date();
     today.setHours(0, 0, 0, 0);

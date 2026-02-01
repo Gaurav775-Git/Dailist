@@ -6,7 +6,7 @@ const auth =require("../middleware/auth")
 router.post("/complete_task",auth,async(req,res)=>{
 
     const  change=req.body
-    const  user_id=req.userID
+    const  user_id=req.user.id
 
     const info=await userdailytask.findOne({
         user:user_id
