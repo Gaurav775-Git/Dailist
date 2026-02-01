@@ -4,14 +4,17 @@ import axios from "axios";
 import Sidebar from "../sidebar/Sidebar";
 import Navigator from "../../components/Navigator";
 import { IoSend } from "react-icons/io5";
+import { OrbitProgress } from "react-loading-indicators";
 
 const Social = () => {
   const [text, settext] = useState("");
   const [post, setpost] = useState([]);
   const [user, setuser] = useState(null);
+  const [loader, setloader] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
+    setloader(true);
     axios
       .get("http://localhost:3000/profile", {
         withCredentials: true,
@@ -29,13 +32,16 @@ const Social = () => {
       })
       .then((res) => {
         setpost(res.data.post);
+        setloader(false);
       })
       .catch((err) => {
         console.log(err);
+        setloader(false);
       });
   }, []);
 
   const submitpost = () => {
+    setloader(true);
     if (!text) {
       alert("post is required");
       return;
@@ -51,14 +57,25 @@ const Social = () => {
         setpost((prev) => [res.data.fullpost, ...prev]);
         settext("");
         alert("Post created successfully!");
+        setloader(false); 
+        
       })
       .catch((err) => {
         console.log(err.response?.data || err);
         alert(err.response?.data?.message || "Failed to create post.");
+        setloader(false);
       });
   };
 
-  return (
+  if (loader) {
+    return (
+      <div className="flex justify-center items-center h-screen bg-black">
+        <OrbitProgress color="#ffffff" size="medium" text="" textColor="" />
+      </div>
+    );
+  }
+
+return (
     <div className="min-h-screen w-full bg-black text-white">
       {/* Sidebar */}
       <div>
@@ -115,7 +132,7 @@ const Social = () => {
         </main>
 
         {/* Centered Navigator */}
-        <div className="w-full flex justify-center">
+        <div className="relative w-full flex justify-center items-center">
           <Navigator />
         </div>
       </div>

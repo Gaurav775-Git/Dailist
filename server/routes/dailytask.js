@@ -11,7 +11,7 @@ const analyze_task= require("../middleware/ai_analyze")
 router.post("/upload_task", auth, async (req, res) => {
   try {
     const {task} = req.body;
-    const user_id = req.userId;
+    const user_id = req.user.id;
 
     const tasks = Object.values(task)
       .map(t => t.trim())
