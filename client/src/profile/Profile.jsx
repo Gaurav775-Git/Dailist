@@ -200,8 +200,11 @@ const Profile = () => {
               <Tasksec />
             </div>
           </div>
+          <div className="relative w-full flex justify-center items-center">
+            <Navigator />
+          </div>
         </main>
-        <Navigator />
+        
       </div>
       
     </div>

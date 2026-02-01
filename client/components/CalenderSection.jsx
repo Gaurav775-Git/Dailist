@@ -1,20 +1,32 @@
 import React, { useState, useEffect } from 'react'
 import Monthgrid from './Monthgrid'
 import axios from 'axios'
+import {OrbitProgress} from 'react-loading-indicators'
 
 const CalenderSection = () => {
+  const [loader, setLoader] = useState(false) 
   const [completedDays, setCompletedDays] = useState([])
   useEffect(() => {
+    setLoader(true);
     const fetchCompleted = async () => {
       try {
         const res = await axios.get('http://localhost:3000/api/daily-log', { withCredentials: true })
         setCompletedDays(res.data)
       } catch (err) {
         console.log('Error fetching completed days:', err)
-      }
+      }finally {
+        setLoader(false);}
     }
     fetchCompleted()
   }, [])
+
+  if(loader) {
+    return (
+        <div className="flex items-center justify-center w-full h-full">
+          <OrbitProgress color="#ffffff" size="medium" text="" textColor="" />
+        </div>
+    )
+  }
 
   return (
     <div>
