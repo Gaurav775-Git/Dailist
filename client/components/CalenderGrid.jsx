@@ -16,7 +16,7 @@ const CalenderGrid = ({ day, date, completedDays = [], setCompletedDays }) => {
   const cellDate = new Date(date)
   today.setHours(0, 0, 0, 0)
   cellDate.setHours(0, 0, 0, 0)
-  const isPast = cellDate < today
+  const isPast = cellDate > today
 
   useEffect(() => {
     const fetchData = async () => {
