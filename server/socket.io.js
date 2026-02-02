@@ -16,9 +16,13 @@ const configureSocket = (server) => {
       console.log(`User ${socket.id} joined chat ${chatId}`);
     });
 
+    socket.on("leave_chat", (chatId) => {
+      socket.leave(chatId);
+    });
+
     socket.on("send_message", (data) => {
       const { chatId, message } = data;
-      io.to(chatId).emit("receive_message", message);
+      socket.to(chatId).emit("receive_message", message);
     });
 
     socket.on("new_post", (newPost) => {
