@@ -7,9 +7,15 @@ const configureSocket = (server) => {
       methods: ["GET", "POST"],
     },
   });
+  
+
 
   io.on("connection", (socket) => {
     console.log("User connected:", socket.id);
+
+    socket.on("sendPost", (post) => {
+    socket.broadcast.emit("receivePost", post);
+    });
 
     socket.on("join_chat", (chatId) => {
       socket.join(chatId);

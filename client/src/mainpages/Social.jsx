@@ -5,15 +5,19 @@ import Sidebar from "../sidebar/Sidebar";
 import Navigator from "../../components/Navigator";
 import { IoSend } from "react-icons/io5";
 import { OrbitProgress } from "react-loading-indicators";
+import socket from '../socket.io.js';
 
 const Social = () => {
   const [text, settext] = useState("");
   const [post, setpost] = useState([]);
   const [user, setuser] = useState(null);
   const [loader, setloader] = useState(false);
+  const [message , setmessage] = useState([]);
   const navigate = useNavigate();
 
+
   useEffect(() => {
+
     setloader(true);
     axios
       .get("http://localhost:3000/profile", {
@@ -53,19 +57,32 @@ const Social = () => {
         { text },
         { withCredentials: true }
       )
-      .then((res) => {
-        setpost((prev) => [res.data.fullpost, ...prev]);
+            .then((res) => {
+        const newPost = res.data.fullpost;
+        socket.emit("sendPost", newPost);
+
+        setpost((prev) => [newPost, ...prev]);
         settext("");
-        alert("Post created successfully!");
         setloader(false); 
-        
       })
+
       .catch((err) => {
         console.log(err.response?.data || err);
         alert(err.response?.data?.message || "Failed to create post.");
         setloader(false);
       });
   };
+
+  useEffect(() => {
+  socket.on("receivePost", (newPost) => {
+    setpost((prev) => [newPost, ...prev]);
+  });
+
+  return () => {
+    socket.off("receivePost");
+  };
+}, []);
+
 
   if (loader) {
     return (
@@ -103,6 +120,7 @@ return (
             />
 
             <button
+              type="button"
               onClick={submitpost}
               className="bg-white text-black p-2 rounded-full hover:bg-gray-300 transition flex items-center justify-center"
             >

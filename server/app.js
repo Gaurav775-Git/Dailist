@@ -26,7 +26,7 @@ var heatmap_user=require("./routes/heatmap")
 
 var app = express();
 var http = require('http');
-var server = http.createServer(app);
+var server = http.createServer(app);  
 var configureSocket = require('./socket.io');
 var io = configureSocket(server);
 

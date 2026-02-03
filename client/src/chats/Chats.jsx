@@ -37,8 +37,8 @@ const Chats = () => {
   }
 
   return (
-    <div className='flex h-screen bg-gray-900'>
-      <div className='flex flex-col w-1/4 max-h-screen border-r border-gray-700'>
+    <div className='flex h-screen bg-black'>
+      <div className='flex flex-col max-h-screen border-r'>
         <Sidebar />
         <ChatList
           refreshTrigger={chatListKey}
