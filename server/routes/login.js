@@ -3,7 +3,17 @@ const router = express.Router();
 const user = require("../models/user_account");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const cookie = require("cookie-parser");
+const auth = require("../middleware/auth");
+
+router.get("/auth/me", auth, async (req, res) => {
+  try {
+    const u = await user.findById(req.user.id).select("_id name").lean();
+    if (!u) return res.status(404).json({ message: "User not found" });
+    res.json({ id: String(u._id), name: u.name });
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
 
 router.post("/login", async (req, res) => {
   try {
