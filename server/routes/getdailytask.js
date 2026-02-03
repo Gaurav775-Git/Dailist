@@ -21,7 +21,7 @@ router.get("/get_task", auth, async (req, res) => {
     }
 
     return res.status(200).json({ tasks: taskdoc.tasks ,
-        date:taskdoc.date
+        date:taskdoc.date,
     }); 
   } catch (err) {
     console.log(err);

@@ -22,6 +22,7 @@ var messageRoutes = require('./routes/message.route');
 var user_daily_task=require("./routes/dailytask")
 var gettask = require("./routes/getdailytask")
 var complete_task=require("./routes/taskcomplete")
+var heatmap_user=require("./routes/heatmap")
 
 var app = express();
 var http = require('http');
@@ -66,6 +67,7 @@ app.use('/message', messageRoutes);
 app.use("/",user_daily_task)
 app.use("/",gettask)
 app.use("/",complete_task)
+app.use("/",heatmap_user)
 
 // catch 404
 app.use(function(req, res, next) {
