@@ -59,7 +59,7 @@ const ChatList = ({ selectedChat, setSelectedChat, currentUserId, refreshTrigger
   }
 
   return (
-    <div className="bg-gray-800 pl-70  flex-1 overflow-y-auto flex flex-col">
+    <div className=" bg-black border-2 pl-80  flex-1 overflow-y-auto flex flex-col">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold text-white">Chats</h2>
         <button
