@@ -1,5 +1,5 @@
 import React from 'react'
-import Monthgrid from './Monthgrid'
+import Monthgrids from './Monthgrids'
 import { useEffect,useState } from 'react'
 import axios from "axios"
 
@@ -40,7 +40,7 @@ console.log(heatmapdate)
             <p className="w-10 text-xs ml-6 text-gray-500">{mon}</p>
 
             
-            <Monthgrid year={year} months={index} data={heatmapdate}/>
+            <Monthgrids year={year} months={index} data={heatmapdate}/>
           </div>
         ))}
       </div>

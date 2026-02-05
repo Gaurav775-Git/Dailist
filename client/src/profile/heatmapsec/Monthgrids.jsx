@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Monthgrid = ({year , months,data}) => {
+const Monthgrids = ({year , months,data}) => {
   const  totaldays=new Date(year,months+1,0).getDate()
 
    const getColor = (dateStr) => {
@@ -33,4 +33,4 @@ const Monthgrid = ({year , months,data}) => {
   )
 }
 
-export default Monthgrid
+export default Monthgrids

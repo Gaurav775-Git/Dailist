@@ -1,5 +1,5 @@
 import React from 'react'
-import CalenderGrid from './CalenderGrid'
+import CalenderGrid from '../components/CalenderGrid'
 
 const Monthgrid = ({ name, year, monthIndex, completedDays, setCompletedDays }) => {
   const daysInMonth = new Date(year, monthIndex + 1, 0).getDate()

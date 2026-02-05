@@ -23,6 +23,8 @@ var user_daily_task=require("./routes/dailytask")
 var gettask = require("./routes/getdailytask")
 var complete_task=require("./routes/taskcomplete")
 var heatmap_user=require("./routes/heatmap")
+var user_search= require("./routes/search")
+var send_req_user= require("./routes/friendreq")
 
 var app = express();
 var http = require('http');
@@ -68,6 +70,8 @@ app.use("/",user_daily_task)
 app.use("/",gettask)
 app.use("/",complete_task)
 app.use("/",heatmap_user)
+app.use("/",user_search)
+app.use("/",send_req_user)
 
 // catch 404
 app.use(function(req, res, next) {
