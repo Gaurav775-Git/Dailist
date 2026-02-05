@@ -28,7 +28,7 @@ var send_req_user= require("./routes/friendreq")
 
 var app = express();
 var http = require('http');
-var server = http.createServer(app);
+var server = http.createServer(app);  
 var configureSocket = require('./socket.io');
 var io = configureSocket(server);
 

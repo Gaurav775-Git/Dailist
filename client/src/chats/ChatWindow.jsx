@@ -102,7 +102,7 @@ const ChatWindow = ({ selectedChat, currentUser, onMessageSent, onMessageReceive
   }
 
   return (
-    <div className="flex-1 flex flex-col items-center justify-center bg-[#222] text-white p-5">
+    <div className="flex-1 flex flex-col items-center justify-center bg-black text-white p-5">
       <div
         id="message-container"
         className="w-[700px] h-[600px] p-5 border-2 border-white rounded-3xl flex flex-col gap-4 overflow-y-auto"
