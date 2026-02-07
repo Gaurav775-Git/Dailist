@@ -71,7 +71,7 @@ app.use("/",gettask)
 app.use("/",complete_task)
 app.use("/",heatmap_user)
 app.use("/",user_search)
-app.use("/",send_req_user)
+app.use("/",send_req_user(io))
 
 // catch 404
 app.use(function(req, res, next) {

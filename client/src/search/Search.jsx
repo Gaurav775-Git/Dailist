@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Sidebar from "../sidebar/Sidebar";
 import axios from "axios";
 import { CiSearch } from "react-icons/ci";
+import {sendrequest} from "../chats/api"
+import { PiUserListDuotone } from "react-icons/pi";
 
 const Search = () => {
   const [users, setUsers] = useState([]);
@@ -24,17 +26,13 @@ const Search = () => {
       ))
         .catch(console.log);
     }, 400);
-
     return () => clearTimeout(timer);
+    
   }, [search]);
 
   const submitid = async (userid) => {
     try {
-      await axios.post(
-        "http://localhost:3000/send-request",
-        { to: userid },
-        { withCredentials: true }
-      );
+      sendrequest(userid)
       alert("Friend request sent 🚀");
     } catch (err) {
       console.log(err);

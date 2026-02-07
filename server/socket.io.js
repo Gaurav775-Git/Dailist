@@ -35,9 +35,15 @@ const configureSocket = (server) => {
       io.emit("post_added", newPost);
     });
 
+    socket.on("join",(userid)=>{
+        socket.join(userid)    
+        console.log(userid)  
+    })
+
     socket.on("disconnect", () => {
       console.log("User disconnected:", socket.id);
     });
+    
   });
 
   return io; // Export io instance

@@ -55,16 +55,6 @@ const Sidebar = () => {
           AI Task
         </NavLink>
       </div>
-
-     
-      <div 
-      className="py-4 pr-5 flex justify-end ">
-        <button className="w-3/5 h-12 bg-[#D1D0D0] rounded-3xl text-black text-lg hover:bg-white transition">
-          Today Task
-        </button>
-      </div>
-
-      
     </div>
   );
 };

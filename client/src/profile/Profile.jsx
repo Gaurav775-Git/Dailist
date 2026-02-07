@@ -9,6 +9,7 @@ import Editbio from "./Editbio";
 import Heatmap from "./heatmapsec/Heatmap";
 import Tasksec from "./tasksection/Tasksec";
 import Addtask from "../../components/Addtask";
+import Notify from "../profile/notification/Notify"
 
 import { Function } from "./Function";
 const Profile = () => {
@@ -107,6 +108,10 @@ const Profile = () => {
             <span className="text-[19px]">{userprofile.username}</span>
             <span className="text-[12px] text-gray-400">Streak</span>
           </div>
+
+          <div className="flex flex-end mx-5">
+            <Notify/>
+          </div>
         </header>
 
         <main className="flex-1 overflow-y-auto  overflow-x-hidden">
@@ -194,6 +199,7 @@ const Profile = () => {
           <div className="flex w-full">
             <div className="w-3/5 flex justify-center">
               <h1 className="text-white text-2xl font-bold">All Tasks</h1>
+              
             </div>
 
             <div className="w-2/5 flex justify-center">

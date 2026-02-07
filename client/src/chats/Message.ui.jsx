@@ -16,7 +16,7 @@ const Messagebox= () => {
     return () => {
       socket.off('receive')
     }
-  }, []) // ✅ run once
+  }, []) 
 
   const sendmsg = (e) => {
     e.preventDefault()
