@@ -108,7 +108,7 @@ const ChatWindow = ({ selectedChat, currentUser, onMessageSent, onMessageReceive
         className="w-[700px] h-[600px] p-5 border-2 border-white rounded-3xl flex flex-col gap-4 overflow-y-auto"
       >
         <div className="pb-2 border-b border-white/30 flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-600 to-gray-600 flex items-center justify-center overflow-hidden border-2 border-white/50 flex-shrink-0">
+          <div className="w-10 h-10 rounded-full bg-linear-to-br from-blue-600 to-gray-600 flex items-center justify-center overflow-hidden border-2 border-white/50 flex-shrink-0">
             {selectedChat.otherMember?.image?.trim() ? (
               <img
                 src={selectedChat.otherMember.image}
