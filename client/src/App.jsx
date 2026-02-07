@@ -6,21 +6,55 @@ import Search from './search/Search'
 import Chats from './chats/Chats'
 import Profile from './profile/Profile'
 import Aitasks from './ai/Aitasks'
-import {Router,Route,Routes} from 'react-router-dom'
+import {Route,Routes} from 'react-router-dom'
 import TaskLog from './pages/TaskLog'
+import ProtectedRoute from './components/ProtectedRoute'
 import './app.css'
+
 const App = () => {
   return (
-    <div >
-    <Routes>
-      <Route path='/' element={<Login/>}/>
-      <Route path='/social' element={<Social/>}/>
-      <Route path='/tasks' element={<TaskLog/>}/>
-      <Route path='/search' element={<Search/>}/>
-      <Route path='/chats' element={<Chats/>}/>
-      <Route path='/profile' element={<Profile/>}/>
-      <Route path='/aitask' element={<Aitasks/>}/>
-    </Routes>
+    <div>
+      <Routes>
+        {/* Public route - login page */}
+        <Route path='/' element={<Login/>}/>
+        
+        {/* Protected routes - require authentication */}
+        <Route path='/social' element={
+          <ProtectedRoute>
+            <Social/>
+          </ProtectedRoute>
+        }/>
+        
+        <Route path='/tasks' element={
+          <ProtectedRoute>
+            <TaskLog/>
+          </ProtectedRoute>
+        }/>
+        
+        <Route path='/search' element={
+          <ProtectedRoute>
+            <Search/>
+          </ProtectedRoute>
+        }/>
+        
+        <Route path='/chats' element={
+          <ProtectedRoute>
+            <Chats/>
+          </ProtectedRoute>
+        }/>
+        
+        <Route path='/profile' element={
+          <ProtectedRoute>
+            <Profile/>
+          </ProtectedRoute>
+        }/>
+        
+        <Route path='/aitask' element={
+          <ProtectedRoute>
+            <Aitasks/>
+          </ProtectedRoute>
+        }/>
+      </Routes>
     </div>
   )
 }
