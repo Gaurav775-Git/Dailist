@@ -9,7 +9,7 @@ const Tasksec = () => {
   
      useEffect(()=>{
         axios
-        .get("http://localhost:3000/get_task",{
+        .get("https://dailist-1.onrender.com/get_task",{
           withCredentials:true
         })
         .then((res)=>{

@@ -8,7 +8,7 @@ const Heatmap = () => {
   const [heatmapdate,setheatmapdate]=useState([])
 
   useEffect(()=>{
-   axios.get("http://localhost:3000/heatmap",{
+   axios.get("https://dailist-1.onrender.com/heatmap",{
       withCredentials:true
     })
     .then((res)=>{
