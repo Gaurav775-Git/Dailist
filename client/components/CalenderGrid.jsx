@@ -21,7 +21,7 @@ const CalenderGrid = ({ day, date, completedDays = [], setCompletedDays }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`http://localhost:3000/api/daily-log/${date}`, {
+        const res = await axios.get(`https://dailist-1.onrender.com/api/daily-log/${date}`, {
           withCredentials: true
         })
 
@@ -57,7 +57,7 @@ const CalenderGrid = ({ day, date, completedDays = [], setCompletedDays }) => {
     e.preventDefault()
     try {
       await axios.post(
-        'http://localhost:3000/api/daily-log',
+        'https://dailist-1.onrender.com/api/daily-log',
         {
           date,
           day: formData.day,

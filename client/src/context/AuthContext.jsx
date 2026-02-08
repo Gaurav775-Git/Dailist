@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const AuthContext = createContext();
 
-const API_BASE = 'http://localhost:3000';
+const API_BASE = 'https://dailist-1.onrender.com';
 
 const api = axios.create({
   baseURL: API_BASE,

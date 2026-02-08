@@ -25,7 +25,7 @@ const Addtask = ({ onClose }) => {
         alert ("enter a task")
       }
       const res= await axios.post(
-        "http://localhost:3000/upload_task",
+        "https://dailist-1.onrender.com/upload_task",
         {task}, 
         { withCredentials: true }
       );

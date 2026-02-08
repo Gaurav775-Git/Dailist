@@ -10,7 +10,7 @@ const CalenderSection = () => {
     setLoader(true);
     const fetchCompleted = async () => {
       try {
-        const res = await axios.get('http://localhost:3000/api/daily-log', { withCredentials: true })
+        const res = await axios.get('https://dailist-1.onrender.com/api/daily-log', { withCredentials: true })
         setCompletedDays(res.data)
       } catch (err) {
         console.log('Error fetching completed days:', err)

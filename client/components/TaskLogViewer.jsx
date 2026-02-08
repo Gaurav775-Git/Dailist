@@ -10,7 +10,7 @@ const TaskLogViewer = ({ userId }) => {
 
   const fetchLogs = async () => {
     try {
-      const res = await axios.get(`http://localhost:3000/api/daily-log/user/${userId}`, {
+      const res = await axios.get(`https://dailist-1.onrender.com/api/daily-log/user/${userId}`, {
         withCredentials: true
       });
       setLogs(res.data);
@@ -39,7 +39,7 @@ const TaskLogViewer = ({ userId }) => {
   const handleSubmitEdit = async (formData) => {
     try {
       await axios.put(
-        `http://localhost:3000/api/daily-log/${editingLog._id}`,
+        `https://dailist-1.onrender.com/api/daily-log/${editingLog._id}`,
         {
           ...formData,
           date: editingLog.date, // Ensure date is not changed during edit
