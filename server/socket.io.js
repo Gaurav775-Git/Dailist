@@ -3,8 +3,9 @@ const { Server } = require("socket.io");
 const configureSocket = (server) => {
   const io = new Server(server, {
     cors: {
-      origin: "https://dailist-beta.vercel.app/",
+      origin: ["https://dailist-beta.vercel.app", "http://localhost:5173"],
       methods: ["GET", "POST"],
+      credentials: true
     },
   });
   

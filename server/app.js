@@ -42,7 +42,7 @@ app.set('view engine', 'ejs');
 
 // ✅ CORS for Vite frontend link added
 app.use(cors({
-  origin: "https://dailist-beta.vercel.app/",
+  origin: ["https://dailist-beta.vercel.app", "http://localhost:5173"],
   methods: ["GET", "POST", "DELETE", "UPDATE", "PUT"],
   credentials: true
 }));
