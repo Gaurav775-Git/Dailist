@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }) => {
   // Login function
   const login = async (email, password) => {
     try {
-      const response = await api.post('/login', { email, password });
+      const response = await api.post('/auth/login', { email, password });
       if (response.status === 200) {
         // After successful login, verify auth
         const authStatus = await checkAuth();
@@ -63,7 +63,7 @@ export const AuthProvider = ({ children }) => {
   // Logout function
   const logout = async () => {
     try {
-      await api.post('/logout').catch(() => {
+      await api.post('/auth/logout').catch(() => {
       });
     } catch (error) {
       console.error('Logout error:', error);

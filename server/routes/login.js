@@ -8,7 +8,7 @@ const auth = require("../middleware/auth");
 // ✅ GET CURRENT USER
 router.get("/auth/me", auth, async (req, res) => {
   try {
-    const u = await User.findById(req.user._id)
+    const u = await User.findById(req.user.id)
       .select("_id name")
       .lean();
 

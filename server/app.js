@@ -42,12 +42,23 @@ app.set('view engine', 'ejs');
 
 // ✅ CORS for Vite frontend link added
 app.use(cors({
-  origin: [
-  "https://dailist-two.vercel.app",
-  "http://localhost:5173"
-],
-  methods: ["GET", "POST", "DELETE", "UPDATE", "PUT"],
-  credentials: true
+  origin: (origin, callback) => {
+    const allowedOrigins = [
+      "https://dailist-two.vercel.app",
+      "http://localhost:5173",
+      "http://localhost:3000"
+    ];
+    
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  methods: ["GET", "POST", "DELETE", "PATCH", "PUT"],
+  credentials: true,
+  allowedHeaders: ["Content-Type", "Authorization"],
+  optionsSuccessStatus: 200
 }));
 
 app.use(logger('dev'));
