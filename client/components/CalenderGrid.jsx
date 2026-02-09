@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+import api from '../src/api/axios'
 
 const CalenderGrid = ({ day, date, completedDays = [], setCompletedDays }) => {
   const [pop, setPop] = useState(false)
@@ -21,9 +21,7 @@ const CalenderGrid = ({ day, date, completedDays = [], setCompletedDays }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`https://dailist-1.onrender.com/api/daily-log/${date}`, {
-          withCredentials: true
-        })
+        const res = await api.get(`/api/daily-log/${date}`)
 
         if (res.data && (res.data.day || res.data.learned || res.data.technical || res.data.tomorrow)) {
           setFormData({
@@ -56,20 +54,14 @@ const CalenderGrid = ({ day, date, completedDays = [], setCompletedDays }) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      await axios.post(
-        'https://dailist-1.onrender.com/api/daily-log',
-        {
-          date,
-          day: formData.day,
-          learned: formData.learned,
-          technical: formData.technical,
-          tomorrow: formData.tomorrow,
-          color: selectedColor
-        },
-        {
-          withCredentials: true
-        }
-      )
+      await api.post('/api/daily-log', {
+        date,
+        day: formData.day,
+        learned: formData.learned,
+        technical: formData.technical,
+        tomorrow: formData.tomorrow,
+        color: selectedColor
+      })
 
       if (!completedDays.includes(date)) {
         setCompletedDays(prev => [...prev, date])

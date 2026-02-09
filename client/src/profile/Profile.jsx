@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "../sidebar/Sidebar";
 import { FaArrowLeft } from "react-icons/fa";
-import axios from "axios";
+import api from "../api/axios";
 import { Commet } from "react-loading-indicators";
 import { MdOutlineFileUpload } from "react-icons/md";
 import Navigator from "../../components/Navigator";
@@ -23,10 +23,8 @@ const Profile = () => {
   const open = Function((state) => state.open);
 
   useEffect(() => {
-    axios
-      .get("https://dailist-1.onrender.com/profile", {
-        withCredentials: "include",
-      })
+    api
+      .get('/profile')
       .then((res) => {
         console.log(res.data.profile);
         setuserProfile(res.data.profile);
@@ -54,11 +52,7 @@ const Profile = () => {
     formData.append("image", image);
 
     try {
-      const res = await axios.post(
-        "https://dailist-1.onrender.com/upload_image",
-        formData,
-        { withCredentials: true },
-      );
+      const res = await api.post('/upload_image', formData);
 
       setuserProfile((prev) => ({
         ...prev,
@@ -79,11 +73,7 @@ const Profile = () => {
         alert("Quote is required or more than 10 characters");
         return;
       }
-      const res = await axios.post(
-        "https://dailist-1.onrender.com/updatequote",
-        { quote },
-        { withCredentials: true },
-      );
+      const res = await api.post('/updatequote', { quote });
 
       setuserProfile((prev) => ({
         ...prev,

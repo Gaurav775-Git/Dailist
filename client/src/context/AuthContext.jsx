@@ -1,14 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../api/axios';
 
 const AuthContext = createContext();
 
-const API_BASE = 'https://dailist-1.onrender.com';
-
-const api = axios.create({
-  baseURL: API_BASE,
-  withCredentials: true,
-});
 
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -18,8 +12,7 @@ export const AuthProvider = ({ children }) => {
 
   const checkAuth = async () => {
     try {
-      const response = axios.get("/auth/me", { withCredentials: true });
-;
+      const response = await api.get('/auth/me');
       if (response.status === 200 && response.data) {
         setIsAuthenticated(true);
         setUser(response.data);

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import api from '../src/api/axios';
 import { useNavigate } from "react-router-dom";
 
 const Addtask = ({ onClose }) => {
@@ -24,11 +24,7 @@ const Addtask = ({ onClose }) => {
       if(!task){
         alert ("enter a task")
       }
-      const res= await axios.post(
-        "https://dailist-1.onrender.com/upload_task",
-        {task}, 
-        { withCredentials: true }
-      );
+      const res= await api.post('/upload_task', { task });
       
       
       settask({

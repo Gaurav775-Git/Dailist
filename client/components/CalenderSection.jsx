@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Monthgrid from './Monthgrid'
-import axios from 'axios'
+import api from '../src/api/axios'
 import {OrbitProgress} from 'react-loading-indicators'
 
 const CalenderSection = () => {
@@ -10,7 +10,7 @@ const CalenderSection = () => {
     setLoader(true);
     const fetchCompleted = async () => {
       try {
-        const res = await axios.get('https://dailist-1.onrender.com/api/daily-log', { withCredentials: true })
+        const res = await api.get('/api/daily-log')
         setCompletedDays(res.data)
       } catch (err) {
         console.log('Error fetching completed days:', err)

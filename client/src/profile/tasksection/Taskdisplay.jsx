@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios"
+import api from "../../api/axios"
 const Taskdisplay = ({ data, date }) => {
   const [open, setOpen] = useState(false);
   const [score,setscore]=useState(null)
@@ -10,9 +10,7 @@ const Taskdisplay = ({ data, date }) => {
   };
    
   const completetask=async (taskid,taskpoint)=>{
-    const res=await axios.post("https://dailist-1.onrender.com/complete_task",
-      {taskid,taskpoint},
-      {withCredentials:true})
+    const res=await api.post('/complete_task', { taskid, taskpoint })
     console.log(res.data.newscore)
     setscore(res.data.newscore)
 

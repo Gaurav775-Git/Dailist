@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../api/axios";
 import Sidebar from "../sidebar/Sidebar";
 import Navigator from "../../components/Navigator";
 import { IoClose, IoImageOutline } from "react-icons/io5";
@@ -42,10 +42,8 @@ const Social = () => {
   useEffect(() => {
 
     setloader(true);
-    axios
-      .get("https://dailist-1.onrender.com/profile", {
-        withCredentials: true,
-      })
+    api
+      .get('/profile')
       .then((res) => {
         setuser(res.data.profile);
       })
@@ -53,10 +51,8 @@ const Social = () => {
         console.log(err);
       });
 
-    axios
-      .get("https://dailist-1.onrender.com/getuserpost", {
-        withCredentials: true,
-      })
+    api
+      .get('/getuserpost')
       .then((res) => {
         setpost(res.data.post);
         setloader(false);
@@ -126,12 +122,8 @@ const Social = () => {
       ? `${text} ${tags.map(tag => `#${tag}`).join(' ')}`
       : text;
 
-    axios
-      .post(
-        "https://dailist-1.onrender.com/userpost",
-        { text: postText },
-        { withCredentials: true }
-      )
+    api
+      .post('/userpost', { text: postText })
       .then((res) => {
         const newPost = res.data.fullpost;
         socket.emit("sendPost", newPost);

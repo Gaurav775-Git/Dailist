@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../api/axios";
 const EditBio = ({ currentBio, close ,info}) => {
   const navigate=useNavigate()
   const [quote, setquote] = useState(currentBio);
@@ -11,10 +11,7 @@ const EditBio = ({ currentBio, close ,info}) => {
       return
     }
 
-    const res=await axios
-    .post("https://dailist-1.onrender.com/updatequote"
-      , {quote}
-      , {withCredentials:true})
+    const res=await api.post('/updatequote', { quote })
 
       if(res.status===200){
         navigate("/social")

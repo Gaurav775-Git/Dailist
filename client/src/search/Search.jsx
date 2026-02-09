@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../sidebar/Sidebar";
-import axios from "axios";
+import api from "../api/axios";
 import { CiSearch } from "react-icons/ci";
 import {sendrequest} from "../chats/api"
 import { PiUserListDuotone } from "react-icons/pi";
@@ -18,12 +18,9 @@ const Search = () => {
     }
 
     const timer = setTimeout(() => {
-      axios
-        .get(`https://dailist-1.onrender.com/search-users?q=${query}`, {
-          withCredentials: true,
-        })
-        .then((res) => (setUsers(res.data)
-      ))
+      api
+        .get(`/search-users?q=${query}`)
+        .then((res) => setUsers(res.data))
         .catch(console.log);
     }, 400);
     return () => clearTimeout(timer);

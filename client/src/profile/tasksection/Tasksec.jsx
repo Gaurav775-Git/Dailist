@@ -1,17 +1,15 @@
 import React from 'react'
 import Taskdisplay from './Taskdisplay'
 import {useState,useEffect} from "react"
-import axios from "axios"
+import api from "../../api/axios"
 const Tasksec = () => {
 
   const [dailytask,setdailytask] =useState([]);
   const [time,settime]=useState([]);
   
-     useEffect(()=>{
-        axios
-        .get("https://dailist-1.onrender.com/get_task",{
-          withCredentials:true
-        })
+      useEffect(()=>{
+        api
+        .get('/get_task')
         .then((res)=>{
           setdailytask(res.data.tasks);
           settime(res.data.date)

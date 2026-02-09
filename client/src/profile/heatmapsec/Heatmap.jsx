@@ -1,16 +1,14 @@
 import React from 'react'
 import Monthgrids from './Monthgrids'
 import { useEffect,useState } from 'react'
-import axios from "axios"
+import api from "../../api/axios"
 
 
 const Heatmap = () => {
   const [heatmapdate,setheatmapdate]=useState([])
 
   useEffect(()=>{
-   axios.get("https://dailist-1.onrender.com/heatmap",{
-      withCredentials:true
-    })
+   api.get('/heatmap')
     .then((res)=>{
       setheatmapdate(res.data)
 

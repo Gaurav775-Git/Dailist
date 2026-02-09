@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../src/api/axios';
 import TaskLogForm from './TaskLogForm';
 
 const TaskLogViewer = ({ userId }) => {
@@ -10,9 +10,7 @@ const TaskLogViewer = ({ userId }) => {
 
   const fetchLogs = async () => {
     try {
-      const res = await axios.get(`https://dailist-1.onrender.com/api/daily-log/user/${userId}`, {
-        withCredentials: true
-      });
+      const res = await api.get(`/api/daily-log/user/${userId}`);
       setLogs(res.data);
       setLoading(false);
     } catch (err) {
@@ -38,14 +36,11 @@ const TaskLogViewer = ({ userId }) => {
 
   const handleSubmitEdit = async (formData) => {
     try {
-      await axios.put(
-        `https://dailist-1.onrender.com/api/daily-log/${editingLog._id}`,
+      await api.put(
+        `/api/daily-log/${editingLog._id}`,
         {
           ...formData,
-          date: editingLog.date, // Ensure date is not changed during edit
-        },
-        {
-          withCredentials: true
+          date: editingLog.date,
         }
       );
       setEditingLog(null);
