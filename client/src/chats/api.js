@@ -7,7 +7,7 @@ const api = axios.create({
   withCredentials: true,
 });
 
-export const getCurrentUser = () => api.get('/auth/me');
+export const getCurrentUser = () => axios.get("/auth/me", { withCredentials: true });
 export const getChats = () => api.get('/chat');
 export const getUsersForChat = () => api.get('/chat/users');
 export const createChat = (receiverId) => api.post('/chat/create', { receiverId });
