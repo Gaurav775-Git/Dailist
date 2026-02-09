@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const AuthContext = createContext();
 
-const API_BASE = 'http://localhost:3000';
+const API_BASE = 'https://dailist-1.onrender.com';
 
 const api = axios.create({
   baseURL: API_BASE,
@@ -18,7 +18,8 @@ export const AuthProvider = ({ children }) => {
 
   const checkAuth = async () => {
     try {
-      const response = await api.get('/auth/me');
+      const response = axios.get("/auth/me", { withCredentials: true });
+;
       if (response.status === 200 && response.data) {
         setIsAuthenticated(true);
         setUser(response.data);

@@ -12,7 +12,7 @@ const EditBio = ({ currentBio, close ,info}) => {
     }
 
     const res=await axios
-    .post("http://localhost:3000/updatequote"
+    .post("https://dailist-1.onrender.com/updatequote"
       , {quote}
       , {withCredentials:true})
 

@@ -10,7 +10,7 @@ const Taskdisplay = ({ data, date }) => {
   };
    
   const completetask=async (taskid,taskpoint)=>{
-    const res=await axios.post("http://localhost:3000/complete_task",
+    const res=await axios.post("https://dailist-1.onrender.com/complete_task",
       {taskid,taskpoint},
       {withCredentials:true})
     console.log(res.data.newscore)

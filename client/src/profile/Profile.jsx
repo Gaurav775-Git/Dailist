@@ -24,7 +24,7 @@ const Profile = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/profile", {
+      .get("https://dailist-1.onrender.com/profile", {
         withCredentials: "include",
       })
       .then((res) => {
@@ -55,7 +55,7 @@ const Profile = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:3000/upload_image",
+        "https://dailist-1.onrender.com/upload_image",
         formData,
         { withCredentials: true },
       );
@@ -80,7 +80,7 @@ const Profile = () => {
         return;
       }
       const res = await axios.post(
-        "http://localhost:3000/updatequote",
+        "https://dailist-1.onrender.com/updatequote",
         { quote },
         { withCredentials: true },
       );

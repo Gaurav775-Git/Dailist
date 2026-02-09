@@ -43,7 +43,7 @@ const Social = () => {
 
     setloader(true);
     axios
-      .get("http://localhost:3000/profile", {
+      .get("https://dailist-1.onrender.com/profile", {
         withCredentials: true,
       })
       .then((res) => {
@@ -54,7 +54,7 @@ const Social = () => {
       });
 
     axios
-      .get("http://localhost:3000/getuserpost", {
+      .get("https://dailist-1.onrender.com/getuserpost", {
         withCredentials: true,
       })
       .then((res) => {
@@ -128,7 +128,7 @@ const Social = () => {
 
     axios
       .post(
-        "http://localhost:3000/userpost",
+        "https://dailist-1.onrender.com/userpost",
         { text: postText },
         { withCredentials: true }
       )

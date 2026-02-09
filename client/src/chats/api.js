@@ -1,13 +1,13 @@
 import axios from 'axios';
 
-const API_BASE = 'http://localhost:3000';
+const API_BASE = 'https://dailist-1.onrender.com';
 
 const api = axios.create({
   baseURL: API_BASE,
   withCredentials: true,
 });
 
-export const getCurrentUser = () => api.get('/auth/me');
+export const getCurrentUser = () => axios.get("/auth/me", { withCredentials: true });
 export const getChats = () => api.get('/chat');
 export const getUsersForChat = () => api.get('/chat/users');
 export const createChat = (receiverId) => api.post('/chat/create', { receiverId });

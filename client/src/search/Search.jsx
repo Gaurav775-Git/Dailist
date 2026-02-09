@@ -19,7 +19,7 @@ const Search = () => {
 
     const timer = setTimeout(() => {
       axios
-        .get(`http://localhost:3000/search-users?q=${query}`, {
+        .get(`https://dailist-1.onrender.com/search-users?q=${query}`, {
           withCredentials: true,
         })
         .then((res) => (setUsers(res.data)
