@@ -176,83 +176,85 @@ const Social = () => {
 
 return (
     <div className="min-h-screen w-full bg-black text-white">
-      <div>
+      <div className="hidden md:block">
         <Sidebar />
       </div>
 
-      <div className="ml-94 flex flex-col ">
-        <header className="w-full max-w-4xl sticky top-0 z-50 bg-black border-b border-gray-800 flex items-center px-4 py-3">
+      <div className="lg:ml-80 md:ml-60 flex flex-col w-full md:w-auto">
+        <header className="w-full sticky top-0 z-50 bg-black border-b border-gray-800 flex items-center px-3 sm:px-4 py-3 gap-2 sm:gap-3">
           <div
             onClick={() => navigate("/profile")}
-            className="w-12 h-12 cursor-pointer rounded-full border border-gray-600 bg-[#1f1f1f] flex items-center justify-center text-white text-xl mr-3 font-semibold shadow"
+            className="w-10 h-10 sm:w-12 sm:h-12 cursor-pointer rounded-full border border-gray-600 bg-[#1f1f1f] flex items-center justify-center text-white text-lg sm:text-xl mr-1 sm:mr-3 font-semibold shadow flex-shrink-0"
           >
             {user?.username?.[0]?.toUpperCase()}
           </div>
 
           <button
             onClick={() => setIsModalOpen(true)}
-            className="w-full flex items-center gap-3 bg-[#111] px-4 py-3 rounded-full shadow-md border border-gray-800 hover:border-gray-600 transition text-left"
+            className="w-full flex items-center gap-2 sm:gap-3 bg-[#111] px-3 sm:px-4 py-2 sm:py-3 rounded-full shadow-md border border-gray-800 hover:border-gray-600 transition text-left"
           >
-            <span className="text-gray-400 text-sm">What's on your mind?</span>
+            <span className="text-gray-400 text-xs sm:text-sm truncate">What's on your mind?</span>
           </button>
         </header>
 
-        <main className="w-full max-w-4xl p-4 space-y-4">
-          {post.map((post) => (
-            <div
-              key={post._id}
-              className="bg-[#0f0f0f] border border-gray-800 p-4 rounded-xl"
-            >
-              <div className="text-sm text-gray-400">
-                {post.userpost_id?.name}
-              </div>
+        <main className="w-full flex flex-col items-center px-2 sm:px-4 py-4 space-y-3 sm:space-y-4 pb-20 md:pb-4">
+          <div className="w-full max-w-2xl sm:max-w-3xl lg:max-w-4xl space-y-3 sm:space-y-4">
+            {post.map((post) => (
+              <div
+                key={post._id}
+                className="bg-[#0f0f0f] border border-gray-800 p-3 sm:p-4 rounded-lg sm:rounded-xl"
+              >
+                <div className="text-xs sm:text-sm text-gray-400 truncate">
+                  {post.userpost_id?.name}
+                </div>
 
-              <div className="text-white mt-1">{post.text}</div>
+                <div className="text-white mt-2 text-sm sm:text-base break-words">{post.text}</div>
 
-              <div className="text-xs text-gray-500 mt-2">
-                {new Date(post.createdAt).toLocaleString()}
+                <div className="text-xs text-gray-500 mt-2">
+                  {new Date(post.createdAt).toLocaleString()}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </main>
 
-        <div className="relative w-full flex justify-center items-center">
+        <div className="fixed bottom-0 left-0 right-0 md:static relative w-full flex justify-center items-center md:pb-4">
           <Navigator />
         </div>
       </div>
 
       {isModalOpen && (
         <div 
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
           onClick={closeModal}
         >
           <div 
-            className="bg-black border border-gray-800 rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col"
+            className="bg-black border border-gray-800 rounded-xl sm:rounded-2xl w-full h-[85vh] sm:h-auto sm:max-h-[90vh] max-w-xs sm:max-w-lg md:max-w-2xl overflow-hidden flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between p-4 border-b border-gray-800">
+            <div className="flex items-center justify-between p-3 sm:p-4 border-b border-gray-800 flex-shrink-0">
               <button
                 onClick={closeModal}
-                className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-gray-900 transition"
+                className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-gray-900 transition flex-shrink-0"
               >
                 <IoClose size={20} className="text-white" />
               </button>
               <button
                 onClick={submitpost}
                 disabled={!text.trim() || countWords(text) > 100}
-                className="bg-white text-black px-6 py-2 rounded-full font-semibold hover:bg-gray-200 transition disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white"
+                className="bg-white text-black px-4 sm:px-6 py-2 rounded-full font-semibold text-sm sm:text-base hover:bg-gray-200 transition disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white flex-shrink-0"
               >
                 Post
               </button>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-4">
+            <div className="flex-1 overflow-y-auto p-3 sm:p-4">
               <div className="flex items-start gap-3 mb-4">
-                <div className="w-12 h-12 rounded-full border border-gray-600 bg-[#1f1f1f] flex items-center justify-center text-white text-xl font-semibold flex-shrink-0">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-gray-600 bg-[#1f1f1f] flex items-center justify-center text-white text-lg sm:text-xl font-semibold flex-shrink-0">
                   {user?.username?.[0]?.toUpperCase()}
                 </div>
 
-                <div className="flex-1">
+                <div className="flex-1 w-full">
                   <textarea
                     value={text}
                     onChange={(e) => {
@@ -263,7 +265,7 @@ return (
                       }
                     }}
                     placeholder="What's happening?"
-                    className="w-full bg-transparent text-white placeholder-gray-500 text-lg resize-none outline-none min-h-[150px]"
+                    className="w-full bg-transparent text-white placeholder-gray-500 text-base sm:text-lg resize-none outline-none min-h-[120px] sm:min-h-[150px]"
                     rows={6}
                   />
 
@@ -272,7 +274,7 @@ return (
                       {tags.map((tag, index) => (
                         <span
                           key={index}
-                          className="inline-flex items-center gap-2 bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full text-sm"
+                          className="inline-flex items-center gap-2 bg-blue-500/20 text-blue-400 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm"
                         >
                           #{tag}
                           <button
@@ -286,27 +288,27 @@ return (
                     </div>
                   )}
 
-                  <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-800">
-                    <div className="flex items-center gap-4">
+                  <div className="flex flex-col-reverse sm:flex-row items-start sm:items-center justify-between mt-4 pt-4 border-t border-gray-800 gap-3 sm:gap-0">
+                    <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto">
                       <div className="relative" ref={emojiPickerRef}>
                         <button
                           onClick={() => {
                             setShowEmojiPicker(!showEmojiPicker);
                             setShowTagInput(false);
                           }}
-                          className="text-blue-400 hover:text-blue-300 transition p-2 rounded-full hover:bg-gray-900"
+                          className="text-blue-400 hover:text-blue-300 transition p-2 rounded-full hover:bg-gray-900 flex-shrink-0"
                         >
                           <BsEmojiSmile size={20} />
                         </button>
 
                         {showEmojiPicker && (
-                          <div className="absolute bottom-full left-0 mb-2 bg-[#1f1f1f] border border-gray-700 rounded-xl p-3 w-64 h-48 overflow-y-auto z-10 shadow-2xl">
-                            <div className="grid grid-cols-8 gap-2">
+                          <div className="absolute bottom-full left-0 mb-2 bg-[#1f1f1f] border border-gray-700 rounded-xl p-2 sm:p-3 w-56 sm:w-64 h-40 sm:h-48 overflow-y-auto z-10 shadow-2xl">
+                            <div className="grid grid-cols-7 sm:grid-cols-8 gap-1 sm:gap-2">
                               {emojis.map((emoji, index) => (
                                 <button
                                   key={index}
                                   onClick={() => addEmoji(emoji)}
-                                  className="text-2xl hover:bg-gray-700 rounded p-1 transition"
+                                  className="text-xl sm:text-2xl hover:bg-gray-700 rounded p-1 transition"
                                 >
                                   {emoji}
                                 </button>
@@ -322,7 +324,7 @@ return (
                             setShowTagInput(!showTagInput);
                             setShowEmojiPicker(false);
                           }}
-                          className="text-blue-400 hover:text-blue-300 transition p-2 rounded-full hover:bg-gray-900"
+                          className="text-blue-400 hover:text-blue-300 transition p-2 rounded-full hover:bg-gray-900 flex-shrink-0"
                         >
                           <MdTag size={20} />
                         </button>
@@ -335,7 +337,7 @@ return (
                               onChange={(e) => setTagInput(e.target.value)}
                               onKeyPress={handleTagKeyPress}
                               placeholder="Add tag (press Enter)"
-                              className="w-full bg-transparent text-white placeholder-gray-500 outline-none border-b border-gray-700 pb-2 mb-2"
+                              className="w-full bg-transparent text-white placeholder-gray-500 outline-none border-b border-gray-700 pb-2 mb-2 text-sm"
                               autoFocus
                             />
                             <button
@@ -348,12 +350,12 @@ return (
                         )}
                       </div>
 
-                      <button className="text-blue-400 hover:text-blue-300 transition p-2 rounded-full hover:bg-gray-900">
+                      <button className="text-blue-400 hover:text-blue-300 transition p-2 rounded-full hover:bg-gray-900 flex-shrink-0">
                         <IoImageOutline size={20} />
                       </button>
                     </div>
 
-                    <div className={`text-sm ${countWords(text) > 100 ? 'text-red-500' : countWords(text) > 80 ? 'text-yellow-500' : 'text-gray-500'}`}>
+                    <div className={`text-xs sm:text-sm whitespace-nowrap ${countWords(text) > 100 ? 'text-red-500' : countWords(text) > 80 ? 'text-yellow-500' : 'text-gray-500'}`}>
                       {countWords(text)}/100 words
                     </div>
                   </div>
